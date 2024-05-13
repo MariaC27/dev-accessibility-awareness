@@ -1,34 +1,35 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
+// process.env.REACT_APP_OPENAI_API_KEY
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [code, setCode] = useState("")
+  const [apiOutput, setApiOutput] = useState("")
+
+  function callOpenAIAPI(){
+    console.log("calling open ai api")
+  }
 
   return (
-    <>
+    <div className="App">
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <textarea 
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Paste code here"
+          cols = {50}
+          rows = {10}
+        />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>
+        <button onClick={callOpenAIAPI}>Get analysis from OpenAI API</button>
+        {apiOutput !== ""?
+          <p>The output is: {apiOutput}</p>
+          : null
+        }
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
