@@ -2,15 +2,38 @@
 import { useState } from 'react'
 import './App.css'
 
-// process.env.REACT_APP_OPENAI_API_KEY
-
 function App() {
-  const [code, setCode] = useState("")
-  const [apiOutput, setApiOutput] = useState("")
+  const [code, setCode] = useState("");
+  const [apiOutput, setApiOutput] = useState("");
 
-  function callOpenAIAPI(){
-    console.log("calling open ai api")
+  async function callOpenAIAPI() {
+    console.log("Calling the OpenAI API");
+
+    const APIBody = {
+      "model": "gpt-3.5-turbo",
+      "messages": [{"role": "user", "content": "What does this code do? " + code,}],
+      "temperature": 0,
+      "max_tokens": 60,
+      "top_p": 1.0,
+      "frequency_penalty": 0.0,
+      "presence_penalty": 0.0
+    }
+
+    await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+      },
+      body: JSON.stringify(APIBody)
+    }).then((data) => {
+      return data.json();
+    }).then((data) => {
+      console.log(data);
+      setApiOutput(data.choices[0].message.content); // Positive or negative
+    });
   }
+
 
   return (
     <div className="App">
