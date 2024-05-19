@@ -1,10 +1,13 @@
 import { useState } from 'react'
+import { Button, Code, Center, Textarea, Spacer } from '@chakra-ui/react';
+import './Suggestions.css'
 
 function Suggestions () {
-    const [code, setCode] = useState("");
-    const [apiOutput, setApiOutput] = useState("");
-    const [diff, setDiff] = useState([])
+    const [code, setCode] = useState(""); // user input code
+    const [apiOutput, setApiOutput] = useState(""); // code output from api
+    const [diff, setDiff] = useState([]) // list of changed lines 
 
+    // given original code and modified code, return a list with changed line indices
     const compareCode = (originalCode, modifiedCode) => {
         const originalLines = originalCode.split('\n');
         const modifiedLines = modifiedCode.split('\n');
@@ -30,7 +33,7 @@ function Suggestions () {
 
         const APIBody = {
         "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Fix the accessibility issues in this code: " + code } ],
+        "messages": [{"role": "user", "content": "Modify this code to add ARIA labels: " + code } ],
         "temperature": 0,
         "max_tokens": 60,
         "top_p": 1.0,
@@ -45,44 +48,41 @@ function Suggestions () {
             "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
         },
         body: JSON.stringify(APIBody)
+
         }).then((data) => {
         return data.json();
-        }).then((data) => {
-        const processedCode = data.choices[0].message.content;
-        console.log("processed code: ", processedCode)
 
-        // Set the output code with the processed code
-        setApiOutput(processedCode);
-        // Extract and store the highlighted sections
-        // const regex = /<<(\d+)>>/g;
-        // const matches = [...processedCode.matchAll(regex)].map(match => parseInt(match[1]));
+        }).then((data) => {
+            const processedCode = data.choices[0].message.content;
+            console.log("processed code: ", processedCode)
+
+            // Set the output code with the processed code
+            setApiOutput(processedCode);
+            
+            const d = compareCode(code, processedCode); // get diff between old code and new code
+            console.log("diff: ", d)
+            setDiff(d);
         
-        const d = compareCode(code, processedCode);
-        console.log("diff: ", d)
-        setDiff(d);
-        
-      
         });
     }
 
-  const renderHighlightedCode = (output, diffList) => { 
-
-    return output.split('\n').map((line, index) => {
-      const diffLine = diffList.find(d => d.lineIndex === index);
-      console.log("diffLine: ", diffLine)
-      if (diffLine) {
-        // If line has changed, render with highlight
-        return (
-          <div key={index}>
-            {/* <span className="deleted">{diffLine.originalLine}</span> */}
-            <span className="added">{diffLine.modifiedLine}</span>
-          </div>
-        );
-      } else {
-        // If line has not changed, render normally
-        return <div key={index}>{line}</div>;
-      }
-    });
+    // takes new code and list of diff lines and highlights areas that changed 
+    const renderHighlightedCode = (output, diffList) => { 
+        return output.split('\n').map((line, index) => {
+        const diffLine = diffList.find(d => d.lineIndex === index);
+        if (diffLine) {
+            // If line has changed, render with highlight
+            return (
+            <div key={index}>
+                {/* <span className="deleted">{diffLine.originalLine}</span> */}
+                <span className="added">{diffLine.modifiedLine}</span>
+            </div>
+            );
+        } else {
+            // If line has not changed, render normally
+            return <div key={index}>{line}</div>;
+        }
+        });
     };
 
     // Function to handle click on highlighted sections
@@ -94,27 +94,27 @@ function Suggestions () {
 
 
     return (
-        <div className="suggestions">
-        <div>
-            <textarea 
-            onChange={(e) => setCode(e.target.value)}
-            placeholder="Paste code here"
-            cols = {50}
-            rows = {10}
+        <Center width={"100vw"} height={"100vh"}>
+            <div className="suggestions">
+            <Textarea 
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="Paste code here"
+                cols = {50}
+                rows = {10}
             />
-        </div>
-        <div>
-            <button onClick={callOpenAIAPI}>Get analysis from OpenAI API</button>
+            <Button onClick={callOpenAIAPI}>Get analysis from OpenAI API</Button>
+
+            <Spacer/>
         
-        </div>
-        {diff.length !== 0?
-            // <p>The output is: {apiOutput}</p>
-            <div className="code-diff">
-                {renderHighlightedCode(apiOutput, diff)} 
-            </div>
-            : null
+            {diff.length !== 0?
+                <Code className="code-diff">
+                    {renderHighlightedCode(apiOutput, diff)} 
+                </Code>
+                : <p>No suggestions for now!</p>
             }
-        </div>
+            </div>
+        </Center>
+        
     )
 }
 
