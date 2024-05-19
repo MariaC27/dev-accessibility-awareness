@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.code-diff div {
+  white-space: pre-wrap; /* Preserve line breaks */
+}
+
+.deleted {
+  background-color: #ffe6e6; /* Highlight color for deleted lines */
+}
+
+.added {
+  background-color: #e6ffe6; /* Highlight color for added lines */
+}
