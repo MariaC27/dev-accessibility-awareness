@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import Editor from "@monaco-editor/react";
-import './CodeEditor.css'; // Import CSS for styling
+import './CodeEditor.css'; 
 
 const CodeEditor = (props) => {
   // Monaco editor options
