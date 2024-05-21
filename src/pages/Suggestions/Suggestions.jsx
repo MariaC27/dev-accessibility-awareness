@@ -111,7 +111,7 @@ function Suggestions () {
                 rows = {10}
                 marginBottom="5vh"
             />
-            <Button onClick={callOpenAIAPI}>Get analysis from OpenAI API</Button>
+            <Button onClick={callOpenAIAPI} marginBottom="5vh">Analyze</Button>
 
             <Spacer/>
         
