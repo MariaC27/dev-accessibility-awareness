@@ -31,10 +31,10 @@ function Suggestions () {
 
     async function callOpenAIAPI() {
         console.log("Calling the OpenAI API");
-
+        // todo: add if statement logic here based on params
         const APIBody = {
         "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Modify this code to add ARIA labels, alt text, and accessibility fixes where necessary: " + code } ],
+        "messages": [{"role": "user", "content": "Modify this code to add ARIA labels where necessary. For each modification, explain why " + code } ],
         "temperature": 0,
         "max_tokens": 60,
         "top_p": 1.0,
@@ -135,14 +135,6 @@ function Suggestions () {
           </div>
         );
     };
-
-    // Function to handle click on highlighted sections
-    // const handlePopupClick = (lineIndex) => {
-    //     // Logic to show popup with additional information about highlighted section
-    //     // You can implement your own popup component or library here
-    //     alert(`Additional information about line ${lineIndex + 1}`);
-    // };
-
 
     return (
         <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
