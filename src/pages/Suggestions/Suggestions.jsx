@@ -2,10 +2,12 @@
 import { useState } from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
+import { separate_OpenAIAPI } from '../../components/ApiCalls';
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
     const [apiOutput, setApiOutput] = useState(""); // code output from api
+    const [apiOutput2, setApiOutput2] = useState(""); // code output from api
     const [difference, setDifference] = useState([]) // list of changed lines 
 
     // given original code and modified code, return a list with changed line indices
@@ -55,13 +57,11 @@ function Suggestions () {
 
         }).then((data) => {
             const processedCode = data.choices[0].message.content;
-            console.log("processed code: ", processedCode)
 
             // Set the output code with the processed code
             setApiOutput(processedCode);
             
             const d = compareCode(code, processedCode); // get diff between old code and new code
-            console.log("diff: ", d)
             setDifference(d);
         
         });
@@ -69,7 +69,7 @@ function Suggestions () {
 
     // takes new code and list of diff lines and highlights areas that changed 
     const renderHighlightedCode = (diff) => {
-        console.log("diff parameter: ", diff)
+        // console.log("diff parameter: ", diff)
         const renderLine = ({ originalLine, modifiedLine }, index) => {
           const parts = [];
       
@@ -136,6 +136,23 @@ function Suggestions () {
         );
     };
 
+    const getData = async () => {
+        try {
+            const result = await separate_OpenAIAPI(code); // Call the fetchData function
+            setApiOutput2(result); // Set the data in the state
+          } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const handleClick = () =>{
+        getData();
+        const d = compareCode(code, apiOutput2); // get diff between old code and new code
+        console.log("diff: ", d)
+        // setDifference(d);
+
+    }
+
     return (
         <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
@@ -155,7 +172,7 @@ function Suggestions () {
                 rows = {10}
                 marginBottom="3vh"
             />
-            <Button onClick={callOpenAIAPI} marginBottom="3vh">Analyze</Button>
+            <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
 
             <Spacer/>
         

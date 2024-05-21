@@ -1,5 +1,5 @@
 
-export async function callOpenAIAPI(code) {
+export async function separate_OpenAIAPI(code) {
     console.log("Calling the OpenAI API");
 
     const APIBody = {
