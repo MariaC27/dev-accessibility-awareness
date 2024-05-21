@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Button, Code, Center, Textarea, Spacer } from '@chakra-ui/react';
-import './Suggestions.css'
+import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text} from '@chakra-ui/react';
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
@@ -94,13 +93,23 @@ function Suggestions () {
 
 
     return (
-        <Center width={"100vw"} height={"100vh"}>
-            <div className="suggestions">
+        <Center width={"100vw"} height={"100vh"} display="flex" flexDirection="column">
+            <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
+                <Heading as="h1" size="xl" mb={4}>
+                    Welcome to the DAA Code Editor
+                </Heading>
+                <Text fontSize="lg">
+                    Paste in any code and click Analyze to see areas where accessibility improvements could be made and why. 
+                    You can hover over different highlighted areas in the output to learn why certain changes were made.
+                </Text>
+            </Box>
+            <Box textAlign={'center'}>
             <Textarea 
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Paste code here"
                 cols = {50}
                 rows = {10}
+                marginBottom="5vh"
             />
             <Button onClick={callOpenAIAPI}>Get analysis from OpenAI API</Button>
 
@@ -112,7 +121,7 @@ function Suggestions () {
                 </Code>
                 : <p>No suggestions for now!</p>
             }
-            </div>
+            </Box>
         </Center>
         
     )
