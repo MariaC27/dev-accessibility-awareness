@@ -19,8 +19,11 @@
     "openai": "^4.46.0",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
+    "react-diff": "^0.0.7",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
+    "react-string-diff": "^0.2.0",
+    "react-stylable-diff": "^2.0.0",
     "react-syntax-highlighter": "^15.5.0"
   },
   "devDependencies": {

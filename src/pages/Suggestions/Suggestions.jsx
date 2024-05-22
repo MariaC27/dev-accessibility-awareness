@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
 import { OpenAIAPI_Code } from '../../components/ApiCalls';
-import TextHighlighter from '../../components/TextHighlighter/TextHighlighter';
+import Diff from 'react-stylable-diff';
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
@@ -121,6 +121,19 @@ function Suggestions () {
         
     }
 
+
+    
+    const highlightedText = difference.map((obj, index) => {
+        const { modifiedLine, originalLine } = obj;
+
+        return (
+        <div key={index}>
+            <Diff inputA={originalLine} inputB={modifiedLine}  />
+        </div>
+        );
+    })
+    
+
     return (
         <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
@@ -141,7 +154,6 @@ function Suggestions () {
                 marginBottom="3vh"
             />
             <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
-
             <Spacer/>
         
             {difference.length !== 0?
@@ -163,10 +175,11 @@ function Suggestions () {
                         textAlign="left" // Left-align the code
                         className="language-javascript" // Apply syntax highlighting for JavaScript
                     >
-                        <TextHighlighter diff={[{ modifiedLine: "Yes that's nice and I am", originalLine: "Yes I am" }]} />
+                        
+                        {highlightedText}
                     </Code>
                 </Box>
-                : <p>No suggestions for now!</p>
+                 : <p>No suggestions for now!</p> 
             }
             </Box>
         </Center>
