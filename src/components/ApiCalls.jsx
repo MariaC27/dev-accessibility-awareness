@@ -1,5 +1,5 @@
 
-export async function separate_OpenAIAPI(code) {
+export const OpenAIAPI_Code = async (code) => {
     console.log("Calling the OpenAI API");
 
     const APIBody = {
@@ -12,7 +12,7 @@ export async function separate_OpenAIAPI(code) {
     "presence_penalty": 0.0
     }
 
-    await fetch("https://api.openai.com/v1/chat/completions", {
+    return await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
         "Content-Type": "application/json",
@@ -21,12 +21,10 @@ export async function separate_OpenAIAPI(code) {
     body: JSON.stringify(APIBody)
 
     }).then((data) => {
-    return data.json();
+        return data.json();
 
     }).then((data) => {
         const processedCode = data.choices[0].message.content;
-        console.log("processed code: ", processedCode)
-
         // Set the output code with the processed code
         return processedCode;
         

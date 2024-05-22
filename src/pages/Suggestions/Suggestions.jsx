@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-vars */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
-import { separate_OpenAIAPI } from '../../components/ApiCalls';
+import { OpenAIAPI_Code } from '../../components/ApiCalls';
+import TextHighlighter from '../../components/TextHighlighter/TextHighlighter';
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
-    const [apiOutput, setApiOutput] = useState(""); // code output from api
-    const [apiOutput2, setApiOutput2] = useState(""); // code output from api
     const [difference, setDifference] = useState([]) // list of changed lines 
 
     // given original code and modified code, return a list with changed line indices
@@ -31,45 +30,10 @@ function Suggestions () {
         return tempDiff;
     };
 
-    async function callOpenAIAPI() {
-        console.log("Calling the OpenAI API");
-        // todo: add if statement logic here based on params
-        const APIBody = {
-        "model": "gpt-3.5-turbo",
-        "messages": [{"role": "user", "content": "Modify this code to add ARIA labels where necessary. For each modification, explain why " + code } ],
-        "temperature": 0,
-        "max_tokens": 60,
-        "top_p": 1.0,
-        "frequency_penalty": 0.0,
-        "presence_penalty": 0.0
-        }
-
-        await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
-        },
-        body: JSON.stringify(APIBody)
-
-        }).then((data) => {
-        return data.json();
-
-        }).then((data) => {
-            const processedCode = data.choices[0].message.content;
-
-            // Set the output code with the processed code
-            setApiOutput(processedCode);
-            
-            const d = compareCode(code, processedCode); // get diff between old code and new code
-            setDifference(d);
-        
-        });
-    }
-
     // takes new code and list of diff lines and highlights areas that changed 
     const renderHighlightedCode = (diff) => {
-        // console.log("diff parameter: ", diff)
+        console.log("diff parameter: ", diff)
+        console.log("rendering highlighted code")
         const renderLine = ({ originalLine, modifiedLine }, index) => {
           const parts = [];
       
@@ -118,6 +82,8 @@ function Suggestions () {
             // Move to the next character
             start = end;
           }
+
+          console.log("parts: ", parts)
       
           // Add the remaining part of the line
           parts.push(originalLine.slice(start));
@@ -136,21 +102,23 @@ function Suggestions () {
         );
     };
 
+    // calls function from ApiCalls file
     const getData = async () => {
         try {
-            const result = await separate_OpenAIAPI(code); // Call the fetchData function
-            setApiOutput2(result); // Set the data in the state
+            const result = await OpenAIAPI_Code(code); // Call the fetchData function
+            return result;
           } catch (error) {
             console.error('Error:', error);
         }
+   
     }
 
-    const handleClick = () =>{
-        getData();
-        const d = compareCode(code, apiOutput2); // get diff between old code and new code
-        console.log("diff: ", d)
-        // setDifference(d);
-
+    const handleClick = async () =>{
+        let res = await getData();
+        const d = compareCode(code, res); // get diff between old code and new code
+        console.log("got difference")
+        setDifference(d)
+        
     }
 
     return (
@@ -195,7 +163,7 @@ function Suggestions () {
                         textAlign="left" // Left-align the code
                         className="language-javascript" // Apply syntax highlighting for JavaScript
                     >
-                        {renderHighlightedCode(difference)} 
+                        <TextHighlighter diff={[{ modifiedLine: "Yes that's nice and I am", originalLine: "Yes I am" }]} />
                     </Code>
                 </Box>
                 : <p>No suggestions for now!</p>
