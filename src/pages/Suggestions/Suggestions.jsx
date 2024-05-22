@@ -4,6 +4,7 @@ import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, Po
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
 import { OpenAIAPI_Code } from '../../components/ApiCalls';
 import Diff from 'react-stylable-diff';
+import { highlight } from 'prismjs';
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
@@ -30,77 +31,28 @@ function Suggestions () {
         return tempDiff;
     };
 
-    // takes new code and list of diff lines and highlights areas that changed 
-    const renderHighlightedCode = (diff) => {
-        console.log("diff parameter: ", diff)
-        console.log("rendering highlighted code")
-        const renderLine = ({ originalLine, modifiedLine }, index) => {
-          const parts = [];
-      
-          let start = 0;
-          let end = 0;
-      
-          // Iterate over each character in the line
-          while (end < originalLine.length) {
-            // Find the first character where the lines differ
-            while (end < originalLine.length && originalLine[end] === modifiedLine[end]) {
-              end++;
-            }
-      
-            // If there's a change, add it to the parts array
-            if (start !== end) {
-              parts.push(originalLine.slice(start, end));
-            }
-      
-            // Move to the next character
-            start = end;
-      
-            // Find the end of the changed part
-            while (end < originalLine.length && originalLine[end] !== modifiedLine[end]) {
-              end++;
-            }
-      
-            // If there's a change, add it to the parts array with a different color
-            if (start !== end) {
-              parts.push(
-                <Popover key={end} placement="top-start">
-                <PopoverTrigger>
-                    <span key={end} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
-                    {modifiedLine.slice(start, end)}
-                    </span>
-                </PopoverTrigger>
-                <PopoverContent>
-                  <PopoverArrow />
-                  <PopoverCloseButton />
-                  <PopoverHeader>Changed Part</PopoverHeader>
-                  <PopoverBody>test</PopoverBody>
-                </PopoverContent>
-              </Popover>
-              );
-            }
-      
-            // Move to the next character
-            start = end;
-          }
+    // renders text with highlights on areas that changed 
+    const highlightedText = difference.map((obj, index) => {
+        const { modifiedLine, originalLine } = obj;
 
-          console.log("parts: ", parts)
-      
-          // Add the remaining part of the line
-          parts.push(originalLine.slice(start));
-      
-          return (
-            <div key={index}>
-              {parts}
-            </div>
-          );
-        };
-      
         return (
-          <div>
-            {diff.map((line, index) => renderLine(line, index))}
-          </div>
+        <div key={index}>
+            <Popover key={index} placement="top-start">
+            <PopoverTrigger>
+                <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
+                <Diff inputA={originalLine} inputB={modifiedLine}  />
+                </span>
+            </PopoverTrigger>
+            <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverHeader>Changed Part</PopoverHeader>
+                <PopoverBody>test</PopoverBody>
+            </PopoverContent>
+            </Popover>
+        </div>
         );
-    };
+    })
 
     // calls function from ApiCalls file
     const getData = async () => {
@@ -121,18 +73,6 @@ function Suggestions () {
         
     }
 
-
-    
-    const highlightedText = difference.map((obj, index) => {
-        const { modifiedLine, originalLine } = obj;
-
-        return (
-        <div key={index}>
-            <Diff inputA={originalLine} inputB={modifiedLine}  />
-        </div>
-        );
-    })
-    
 
     return (
         <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
