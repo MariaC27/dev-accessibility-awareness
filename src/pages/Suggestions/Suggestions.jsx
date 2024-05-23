@@ -10,6 +10,7 @@ function Suggestions () {
     const [code, setCode] = useState(""); // user input code
     const [difference, setDifference] = useState([]) // list of changed lines 
     const [highlights, setHighlights] = useState() // stores highlighted lines to render
+    const [isLoading, setIsLoading] = useState(false);
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
@@ -102,9 +103,11 @@ function Suggestions () {
     }
 
     const handleClick = async () =>{
+        setIsLoading(true);
         let res = await getData();
         compareCode(code, res).then((d) => {
-            setDifference(d)
+            setDifference(d);
+            setIsLoading(false);
         })
         
     }
@@ -126,16 +129,18 @@ function Suggestions () {
                     You can hover over different highlighted areas in the output to learn why certain changes were made.
                 </Text>
             </Box>
-            <Box textAlign={'center'}>
+            <Box textAlign={'center'} width={"70vw"}>
             <Textarea 
                 onChange={(e) => setCode(e.target.value)}
                 placeholder="Paste code here"
-                cols = {50}
+                cols = {80}
                 rows = {10}
                 marginBottom="3vh"
             />
             <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
             <Spacer/>
+
+            {isLoading ? <p>Loading...</p> : null}
         
             {difference.length !== 0?
                 <Box
@@ -143,7 +148,6 @@ function Suggestions () {
                     color="white"
                     borderRadius="md"
                     p={6}
-                    width={"70vw"}
                     overflow="auto"
                     css={{
                     '& pre': {
@@ -153,7 +157,7 @@ function Suggestions () {
                 >
                     <Code
                         fontSize="md"
-                        p={10}
+                        p={5}
                         textAlign="left" // Left-align the code
                         className="language-javascript" // Apply syntax highlighting for JavaScript
                     >
@@ -161,7 +165,7 @@ function Suggestions () {
                         {highlights}
                     </Code>
                 </Box>
-                 : <p>No suggestions for now!</p> 
+                : null
              } 
             </Box>
         </Center>
