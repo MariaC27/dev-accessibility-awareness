@@ -116,7 +116,7 @@ function Suggestions () {
     }, [difference]);
 
     return (
-        <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
+        <Center width={"100vw"} overflowY="auto" display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
                 <Heading as="h1" size="xl" mb={4}>
                     Welcome to the DAA Code Editor
@@ -143,6 +143,7 @@ function Suggestions () {
                     color="white"
                     borderRadius="md"
                     p={6}
+                    width={"70vw"}
                     overflow="auto"
                     css={{
                     '& pre': {
@@ -152,7 +153,7 @@ function Suggestions () {
                 >
                     <Code
                         fontSize="md"
-                        p={20}
+                        p={10}
                         textAlign="left" // Left-align the code
                         className="language-javascript" // Apply syntax highlighting for JavaScript
                     >
