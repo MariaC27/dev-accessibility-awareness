@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
-import { OpenAIAPI_Code } from '../../components/ApiCalls';
+import { OpenAIAPI_Code, OpenAIAPI_Popup } from '../../components/ApiCalls';
 import Diff from 'react-stylable-diff';
 import './Suggestions.css'
 
@@ -11,20 +11,23 @@ function Suggestions () {
     const [difference, setDifference] = useState([]) // list of changed lines 
 
     // given original code and modified code, return a list with changed line indices
-    const compareCode = (originalCode, modifiedCode) => {
+    const compareCode = async (originalCode, modifiedCode) => {
         const originalLines = originalCode.split('\n');
         const modifiedLines = modifiedCode.split('\n');
         const tempDiff = [];
 
         // Compare each line and detect changes
-        originalLines.forEach((line, index) => {
+        originalLines.forEach(async (line, index) => {
         if (line !== modifiedLines[index]) {
             // If line is different, add to diffLines array
+            let temp_list = [line, modifiedLines[index]]; // has original and modified code to pass to api 
+            const output_reason = await getPopupData(temp_list);
             tempDiff.push({
                 lineIndex: index,
                 isMod: true,
                 originalLine: line,
                 modifiedLine: modifiedLines[index],
+                reason: output_reason,
             });
         } else{
             tempDiff.push({
@@ -32,6 +35,7 @@ function Suggestions () {
                 isMod: false,
                 originalLine: line,
                 modifiedLine: line,
+                reason: '',
             })
         }
         });
@@ -39,10 +43,9 @@ function Suggestions () {
         return tempDiff;
     };
 
-    // renders text with highlights on areas that changed 
+    // renders text with highlights on areas that changed
     const highlightedText = difference.map((obj, index) => {
-        const { modifiedLine, originalLine, isMod} = obj;
-
+        const { lineIndex, isMod, modifiedLine, originalLine, reason} = obj;
         if (isMod) {
             return (
             <div key={index}>
@@ -55,8 +58,8 @@ function Suggestions () {
                 <PopoverContent>
                     <PopoverArrow />
                     <PopoverCloseButton />
-                    <PopoverHeader>Changed Part</PopoverHeader>
-                    <PopoverBody>test</PopoverBody>
+                    <PopoverHeader>Changes Made</PopoverHeader>
+                    <PopoverBody>{reason}</PopoverBody>
                 </PopoverContent>
                 </Popover>
             </div>
@@ -81,12 +84,20 @@ function Suggestions () {
    
     }
 
+    // eventually takes list as a parameter that has two string elements: original and mod code
+    const getPopupData = async(list) => {
+        try {
+            const result = await OpenAIAPI_Popup(list); // Call the fetchData function
+            return result;
+          } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
     const handleClick = async () =>{
         let res = await getData();
-        const d = compareCode(code, res); // get diff between old code and new code
-        console.log("got difference")
-        setDifference(d)
-        
+        const d = await compareCode(code, res); // get diff between old code and new code
+        setDifference(d);
     }
 
 
