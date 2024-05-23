@@ -1,6 +1,6 @@
 
 export const OpenAIAPI_Code = async (code) => {
-    console.log("Calling the OpenAI API");
+    console.log("Calling the OpenAI API for CODE");
 
     const APIBody = {
     "model": "gpt-3.5-turbo",
@@ -33,7 +33,7 @@ export const OpenAIAPI_Code = async (code) => {
 }
 
 export const OpenAIAPI_Popup = async (list) => {
-    console.log("Calling the OpenAI API");
+    console.log("Calling the OpenAI API for REASON");
 
     const APIBody = {
     "model": "gpt-3.5-turbo",

@@ -8,40 +8,41 @@ import './Suggestions.css'
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
-    const [difference, setDifference] = useState([]) // list of changed lines
-    const [highlights, setHighlights] = useState() 
+    const [difference, setDifference] = useState([]) // list of changed lines 
+    const [highlights, setHighlights] = useState() // stores highlighted lines to render
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
         const originalLines = originalCode.split('\n');
         const modifiedLines = modifiedCode.split('\n');
-        const tempDiff = [];
+        let tempDiff = [];
 
         // Compare each line and detect changes
-        originalLines.forEach(async (line, index) => {
+        tempDiff = originalLines.map(async (line, index) => {
         if (line !== modifiedLines[index]) {
             // If line is different, add to diffLines array
             let temp_list = [line, modifiedLines[index]]; // has original and modified code to pass to api 
             const output_reason = await getPopupData(temp_list);
-            tempDiff.push({
+            return {
                 lineIndex: index,
                 isMod: true,
                 originalLine: line,
                 modifiedLine: modifiedLines[index],
                 reason: output_reason,
-            });
+            };
         } else{
-            tempDiff.push({
+            return {
                 lineIndex: index,
                 isMod: false,
                 originalLine: line,
                 modifiedLine: line,
                 reason: '',
-            })
+            };
         }
         });
 
-        return tempDiff;
+        // "resolve" the promises before returning
+        return Promise.all(tempDiff);
     };
 
     // calls function from ApiCalls file
@@ -67,11 +68,9 @@ function Suggestions () {
 
     const wrapper = (d) => {
         const highlightedText = d.map((obj, index) => {
-            console.log("obj: ", obj)
             const { lineIndex, isMod, modifiedLine, originalLine, reason} = obj;
-            console.log("lineIndex and isMod: ", lineIndex, isMod)
+            // console.log("lineIndex and isMod: ", index, isMod)
             if (isMod) { 
-                console.log("reached isMod test") 
                 return (
                 <div key={index}>
                     <Popover key={index} placement="top-start">
@@ -89,8 +88,8 @@ function Suggestions () {
                     </Popover>
                 </div>
                 );
-            } else{
-                console.log("reached else")
+            } 
+            else{
                 return (
                     <span key={index}>
                         <Diff inputA={originalLine} inputB={modifiedLine}  />
@@ -104,16 +103,15 @@ function Suggestions () {
 
     const handleClick = async () =>{
         let res = await getData();
-        const d = await compareCode(code, res); // get diff between old code and new code
-        setDifference(d)
-        console.log(Object.keys(d).length)
+        compareCode(code, res).then((d) => {
+            setDifference(d)
+        })
+        
     }
 
+    // re-renders the page whenever "difference" is updated after API calls
     useEffect(() =>{
-        console.log("rerender") // ISSUE: THIS ISN'T RE-RENDERING WHEN DIFFERENCE CHANGES
-        console.log("difference in useEffect: ", difference)
         let highlighted_return = wrapper(difference)
-        console.log("high return: " , highlighted_return)
         setHighlights(highlighted_return);
     }, [difference]);
 
@@ -139,7 +137,7 @@ function Suggestions () {
             <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
             <Spacer/>
         
-            {highlights?
+            {difference.length !== 0?
                 <Box
                     bg="gray.800"
                     color="white"
