@@ -8,7 +8,8 @@ import './Suggestions.css'
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
-    const [difference, setDifference] = useState([]) // list of changed lines 
+    const [difference, setDifference] = useState([]) // list of changed lines
+    const [highlights, setHighlights] = useState() 
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
@@ -43,36 +44,6 @@ function Suggestions () {
         return tempDiff;
     };
 
-    // renders text with highlights on areas that changed
-    const highlightedText = difference.map((obj, index) => {
-        const { lineIndex, isMod, modifiedLine, originalLine, reason} = obj;
-        if (isMod) {
-            return (
-            <div key={index}>
-                <Popover key={index} placement="top-start">
-                <PopoverTrigger>
-                    <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
-                    <Diff inputA={originalLine} inputB={modifiedLine}  />
-                    </span>
-                </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverArrow />
-                    <PopoverCloseButton />
-                    <PopoverHeader>Changes Made</PopoverHeader>
-                    <PopoverBody>{reason}</PopoverBody>
-                </PopoverContent>
-                </Popover>
-            </div>
-            );
-        } else{
-            return (
-                <span key={index}>
-                    <Diff inputA={originalLine} inputB={modifiedLine}  />
-                </span>
-            )
-        }
-    })
-
     // calls function from ApiCalls file
     const getData = async () => {
         try {
@@ -94,12 +65,57 @@ function Suggestions () {
         }
     }
 
+    const wrapper = (d) => {
+        const highlightedText = d.map((obj, index) => {
+            console.log("obj: ", obj)
+            const { lineIndex, isMod, modifiedLine, originalLine, reason} = obj;
+            console.log("lineIndex and isMod: ", lineIndex, isMod)
+            if (isMod) { 
+                console.log("reached isMod test") 
+                return (
+                <div key={index}>
+                    <Popover key={index} placement="top-start">
+                    <PopoverTrigger>
+                        <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
+                        <Diff inputA={originalLine} inputB={modifiedLine}  />
+                        </span>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>Changes Made</PopoverHeader>
+                        <PopoverBody>{reason}</PopoverBody>
+                    </PopoverContent>
+                    </Popover>
+                </div>
+                );
+            } else{
+                console.log("reached else")
+                return (
+                    <span key={index}>
+                        <Diff inputA={originalLine} inputB={modifiedLine}  />
+                    </span>
+                )
+            }
+        })
+
+        return highlightedText;
+    }
+
     const handleClick = async () =>{
         let res = await getData();
         const d = await compareCode(code, res); // get diff between old code and new code
-        setDifference(d);
+        setDifference(d)
+        console.log(Object.keys(d).length)
     }
 
+    useEffect(() =>{
+        console.log("rerender") // ISSUE: THIS ISN'T RE-RENDERING WHEN DIFFERENCE CHANGES
+        console.log("difference in useEffect: ", difference)
+        let highlighted_return = wrapper(difference)
+        console.log("high return: " , highlighted_return)
+        setHighlights(highlighted_return);
+    }, [difference]);
 
     return (
         <Center width={"100vw"} height={"100vh"} overflowY="auto"display="flex" flexDirection="column">
@@ -123,7 +139,7 @@ function Suggestions () {
             <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
             <Spacer/>
         
-            {difference.length !== 0?
+            {highlights?
                 <Box
                     bg="gray.800"
                     color="white"
@@ -143,11 +159,11 @@ function Suggestions () {
                         className="language-javascript" // Apply syntax highlighting for JavaScript
                     >
                         
-                        {highlightedText}
+                        {highlights}
                     </Code>
                 </Box>
                  : <p>No suggestions for now!</p> 
-            }
+             } 
             </Box>
         </Center>
         
