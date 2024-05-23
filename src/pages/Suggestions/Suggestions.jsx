@@ -4,7 +4,7 @@ import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, Po
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
 import { OpenAIAPI_Code } from '../../components/ApiCalls';
 import Diff from 'react-stylable-diff';
-import { highlight } from 'prismjs';
+import './Suggestions.css'
 
 function Suggestions () {
     const [code, setCode] = useState(""); // user input code
@@ -21,10 +21,18 @@ function Suggestions () {
         if (line !== modifiedLines[index]) {
             // If line is different, add to diffLines array
             tempDiff.push({
-            lineIndex: index,
-            originalLine: line,
-            modifiedLine: modifiedLines[index],
+                lineIndex: index,
+                isMod: true,
+                originalLine: line,
+                modifiedLine: modifiedLines[index],
             });
+        } else{
+            tempDiff.push({
+                lineIndex: index,
+                isMod: false,
+                originalLine: line,
+                modifiedLine: line,
+            })
         }
         });
 
@@ -33,25 +41,33 @@ function Suggestions () {
 
     // renders text with highlights on areas that changed 
     const highlightedText = difference.map((obj, index) => {
-        const { modifiedLine, originalLine } = obj;
+        const { modifiedLine, originalLine, isMod} = obj;
 
-        return (
-        <div key={index}>
-            <Popover key={index} placement="top-start">
-            <PopoverTrigger>
-                <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
-                <Diff inputA={originalLine} inputB={modifiedLine}  />
+        if (isMod) {
+            return (
+            <div key={index}>
+                <Popover key={index} placement="top-start">
+                <PopoverTrigger>
+                    <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
+                    <Diff inputA={originalLine} inputB={modifiedLine}  />
+                    </span>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverArrow />
+                    <PopoverCloseButton />
+                    <PopoverHeader>Changed Part</PopoverHeader>
+                    <PopoverBody>test</PopoverBody>
+                </PopoverContent>
+                </Popover>
+            </div>
+            );
+        } else{
+            return (
+                <span key={index}>
+                    <Diff inputA={originalLine} inputB={modifiedLine}  />
                 </span>
-            </PopoverTrigger>
-            <PopoverContent>
-                <PopoverArrow />
-                <PopoverCloseButton />
-                <PopoverHeader>Changed Part</PopoverHeader>
-                <PopoverBody>test</PopoverBody>
-            </PopoverContent>
-            </Popover>
-        </div>
-        );
+            )
+        }
     })
 
     // calls function from ApiCalls file
