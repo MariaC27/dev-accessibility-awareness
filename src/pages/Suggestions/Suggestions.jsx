@@ -106,6 +106,7 @@ function Suggestions () {
         setIsLoading(true);
         let res = await getData();
         compareCode(code, res).then((d) => {
+            console.log("DIFFERENCE: ", d)
             setDifference(d);
             setIsLoading(false);
         })
@@ -116,7 +117,6 @@ function Suggestions () {
     useEffect(() =>{
         let highlighted_return = wrapper(difference)
         setHighlights(highlighted_return);
-        console.log("highlights: ", highlighted_return)
     }, [difference]);
 
     return (
