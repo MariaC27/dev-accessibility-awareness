@@ -1,7 +1,7 @@
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Suggestions from './pages/Suggestions/Suggestions';
-import Explanations from './pages/Explanations/Explanations';
+import Examples from './pages/Examples/Examples';
 import Resources from './pages/Resources/Resources';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
@@ -16,7 +16,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home/>} />
           <Route path="/editor" element={<Suggestions/>} />
-          <Route path="/explanations" element={<Explanations/>} />
+          <Route path="/examples" element={<Examples/>} />
           <Route path="/resources" element={<Resources/>} />
         </Routes>
     </Router>

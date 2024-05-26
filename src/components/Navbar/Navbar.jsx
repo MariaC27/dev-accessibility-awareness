@@ -26,8 +26,8 @@ const Navbar = () => {
             Editor
           </Link>
           <Spacer />
-          <Link as={RouterLink} to="/explanations">
-            Explanations
+          <Link as={RouterLink} to="/examples">
+            Examples
           </Link>
           <Spacer />
           <Link as={RouterLink} to="/resources">

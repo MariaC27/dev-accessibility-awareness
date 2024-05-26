@@ -11,7 +11,7 @@ const Home = () => {
           production sphere.
         </Text>
         <Text fontSize="lg">
-            Here, you will find resources, guides, and an AI-powered code editor to help you understand
+            Here, you will find resources, examples, and an AI-powered code editor to help you understand
             and implement accessibility best practices in your projects. Click on the links in the navbar to get started!
         </Text>
     </Center>
