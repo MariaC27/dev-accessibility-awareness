@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import CodeExample from '../../components/CodeExample/CodeExample';
-import {d1} from '../../services/ExamplesDiff';
+import {d1, d2} from '../../services/ExamplesDiff';
 
 const Explanations = () => {
 
@@ -25,10 +25,10 @@ const Explanations = () => {
         >
           <VStack align="start" spacing="4">
             <Heading as="h3" size="md" color="blue.600">
-              Semantic HTML
+              ARIA Labels
             </Heading>
             <Text>
-              Semantic HTML means...
+              ARIA Labels are...
             </Text>
             <CodeExample diff={d1}/>
           </VStack>
@@ -48,7 +48,7 @@ const Explanations = () => {
             <Text>
               Alternative text is...
             </Text>
-            <CodeExample diff={d1}/>
+            <CodeExample diff={d2}/>
           </VStack>
         </Box>
       </VStack>

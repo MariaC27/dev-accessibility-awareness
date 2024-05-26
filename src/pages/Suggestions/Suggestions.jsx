@@ -151,7 +151,7 @@ function Suggestions () {
                         bg="gray.800"
                         color="white"
                         borderRadius="md"
-                        p={6}
+                        p={4}
                         overflow="auto"
                         css={{
                         '& pre': {
@@ -159,7 +159,7 @@ function Suggestions () {
                         },
                         }}
                     >
-                        <Code fontSize="md" p={5} textAlign="left" className="language-javascript">
+                        <Code width={"65vw"} fontSize="md" p={5} textAlign="left" className="language-javascript">
                             {highlights}
                         </Code>
                     </Box>

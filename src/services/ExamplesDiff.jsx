@@ -22,3 +22,55 @@ export const d1 = [
 
     },
   ]
+
+  export const d2 = [
+    {
+        isMod: false,
+        lineIndex: 0,
+        modifiedLine: "function App() {",
+        originalLine: "function App() {",
+        reason: ""
+    },
+    {
+        isMod: false,
+        lineIndex: 1,
+        modifiedLine: "  return (",
+        originalLine: "  return (",
+        reason: ""
+    },
+    {
+        isMod: false,
+        lineIndex: 2,
+        modifiedLine: "    <div>",
+        originalLine: "    <div>",
+        reason: ""
+    },
+    {
+        isMod: false,
+        lineIndex: 3,
+        modifiedLine: "      <h1>Caring for a Cat</h1>",
+        originalLine: "      <h1>Caring for a Cat</h1>",
+        reason: ""
+    },
+    {
+        isMod: true,
+        lineIndex: 4,
+        modifiedLine: `      <img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg" alt="Cat scratches post" />`,
+        originalLine: `      <img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg" />`,
+        reason: `The accessibility modification was necessary to provide a text alternative for the image which describes the content of the images and makes it accessible to users who rely on screen readers or have images disabled.`
+    },
+    {
+        isMod: false,
+        lineIndex: 5,
+        modifiedLine: "    </div>",
+        originalLine: "    </div>",
+        reason: ""
+    },
+    {
+        isMod: false,
+        lineIndex: 6,
+        modifiedLine: "  );}",
+        originalLine: "  );}",
+        reason: ""
+    },
+  ]

@@ -4,13 +4,13 @@
 <a href="https://www.w3schools.com">See Documentation</a> 
 
 
-list = [
-    {
-        original: "<a href="https://www.w3schools.com">Visit W3Schools</a>"
-        modified: "<a href="https://www.w3schools.com" aria-label="Visit w3 schools">Visit W3Schools</a>
-    },
-    {
-        original: "<h2>The href Attribute</h2>"
-        modified: "<h2 aria-label="Heading: The href Attribute">The href Attribute</h2>"
-    }
-]
+function App() {
+  return (
+    <div>
+      <h1>Caring for a Cat</h1>
+      <img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg" />
+    </div>
+  );
+}
+
+export default App;
