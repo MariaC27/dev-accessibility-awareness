@@ -6,7 +6,6 @@ import Resources from './pages/Resources/Resources';
 import Home from './pages/Home/Home';
 import Navbar from './components/Navbar/Navbar';
 import './App.css'
-// import Test from './pages/Explanations/Test';
 
 
 function App() {

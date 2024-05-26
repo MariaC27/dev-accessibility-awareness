@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
-import { OpenAIAPI_Code, OpenAIAPI_Popup } from '../../components/ApiCalls';
+import { OpenAIAPI_Code, OpenAIAPI_Popup } from '../../services/ApiCalls';
 import Diff from 'react-stylable-diff';
 import './Suggestions.css'
 
@@ -116,6 +116,7 @@ function Suggestions () {
     useEffect(() =>{
         let highlighted_return = wrapper(difference)
         setHighlights(highlighted_return);
+        console.log("highlights: ", highlighted_return)
     }, [difference]);
 
     return (
@@ -155,13 +156,7 @@ function Suggestions () {
                     },
                     }}
                 >
-                    <Code
-                        fontSize="md"
-                        p={5}
-                        textAlign="left" // Left-align the code
-                        className="language-javascript" // Apply syntax highlighting for JavaScript
-                    >
-                        
+                    <Code fontSize="md" p={5} textAlign="left" className="language-javascript">
                         {highlights}
                     </Code>
                 </Box>

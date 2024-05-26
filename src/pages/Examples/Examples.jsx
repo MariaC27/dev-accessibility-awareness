@@ -1,15 +1,16 @@
-import { Box, Heading, Text, VStack, Link, Button } from '@chakra-ui/react';
+import { Box, Heading, Text, VStack } from '@chakra-ui/react';
+import CodeExample from '../../components/CodeExample/CodeExample';
 
 const Explanations = () => {
   return (
-    <Box pl={10} pt={10} height={"100vh"}>
+    <Box pl={10} pt={10}>
       <Heading as="h1" size="xl" mb={4}>
         Explanations and Examples
       </Heading>
-      <Text fontSize="lg" mb={4}>
-        Welcome to our interactive guide on developer-side accessibility best practices! Below, you will find explanations on alt text, semantic HTML, and accessibility tags.
+      <Text fontSize="lg" mb={10} width={"80vw"}>
+        Welcome to our interactive guide on developer-side accessibility best practices! Below, you will find explanations and examples for using alt text, semantic HTML, and ARIA tags.
       </Text>
-
+  
       <VStack align="start" spacing="8">
         <Box
           p="4"
@@ -25,9 +26,7 @@ const Explanations = () => {
             <Text>
               Semantic HTML means...
             </Text>
-            <Link href="#" isExternal>
-              <Button colorScheme="blue">See an example</Button>
-            </Link>
+            <CodeExample originalCode={"<div>test</div>"} changedCode={"<div>test2</div>"}/>
           </VStack>
         </Box>
 
@@ -45,9 +44,7 @@ const Explanations = () => {
             <Text>
               Alternative text is...
             </Text>
-            <Link href="#" isExternal>
-              <Button colorScheme="blue">See an example</Button>
-            </Link>
+            <CodeExample originalCode={"<div>test</div>"} changedCode={"<div>test2</div>"}/>
           </VStack>
         </Box>
       </VStack>
