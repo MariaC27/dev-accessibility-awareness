@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef} from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
     PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
 import { OpenAIAPI_Code, OpenAIAPI_Popup } from '../../services/ApiCalls';
@@ -11,6 +11,8 @@ function Suggestions () {
     const [difference, setDifference] = useState([]) // list of changed lines 
     const [highlights, setHighlights] = useState() // stores highlighted lines to render
     const [isLoading, setIsLoading] = useState(false);
+
+    const editorRef = useRef(null);
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
@@ -109,6 +111,7 @@ function Suggestions () {
             console.log("DIFFERENCE: ", d)
             setDifference(d);
             setIsLoading(false);
+            editorRef.current.scrollIntoView({ behavior: 'smooth' })
         })
         
     }
@@ -130,39 +133,40 @@ function Suggestions () {
                     You can hover over different highlighted areas in the output to learn why certain changes were made.
                 </Text>
             </Box>
-            <Box textAlign={'center'} width={"70vw"}>
-            <Textarea 
-                onChange={(e) => setCode(e.target.value)}
-                placeholder="Paste code here"
-                cols = {80}
-                rows = {10}
-                marginBottom="3vh"
-            />
-            <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
-            <Spacer/>
+            <Box textAlign={'center'} width={"70vw"} mb={"5vh"}>
+                <Textarea 
+                    onChange={(e) => setCode(e.target.value)}
+                    placeholder="Paste code here"
+                    cols = {80}
+                    rows = {8}
+                    marginBottom="3vh"
+                />
+                <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
+                <Spacer/>
 
-            {isLoading ? <p>Loading...</p> : null}
-        
-            {difference.length !== 0?
-                <Box
-                    bg="gray.800"
-                    color="white"
-                    borderRadius="md"
-                    p={6}
-                    overflow="auto"
-                    css={{
-                    '& pre': {
-                        margin: 0,
-                    },
-                    }}
-                >
-                    <Code fontSize="md" p={5} textAlign="left" className="language-javascript">
-                        {highlights}
-                    </Code>
-                </Box>
-                : null
-             } 
+                {isLoading ? <p>Loading...</p> : null}
+            
+                {difference.length !== 0?
+                    <Box
+                        bg="gray.800"
+                        color="white"
+                        borderRadius="md"
+                        p={6}
+                        overflow="auto"
+                        css={{
+                        '& pre': {
+                            margin: 0,
+                        },
+                        }}
+                    >
+                        <Code fontSize="md" p={5} textAlign="left" className="language-javascript">
+                            {highlights}
+                        </Code>
+                    </Box>
+                    : null
+                } 
             </Box>
+            <Spacer ref={editorRef}/>
         </Center>
         
     )

@@ -1,7 +1,7 @@
 
 <h2>Welcome to our site!</h2>
 <p>Click on the links below to check things out</p>
-<a href="https://www.w3schools.com">Visit W3Schools</a> 
+<a href="https://www.w3schools.com">See Documentation</a> 
 
 
 list = [
