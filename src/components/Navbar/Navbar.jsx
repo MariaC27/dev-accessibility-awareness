@@ -14,7 +14,7 @@ const Logo = () => {
 const Navbar = () => {
   return (
       <Flex w="100%"
-        px="6"
+        px="5"
         py="5"
         align="center"
         justify="space-between"
