@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useEffect, useState, useRef} from 'react'
 import { Button, Code, Center, Textarea, Spacer, Box, Heading, Text, Popover, PopoverTrigger, 
-    PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody} from '@chakra-ui/react';
+    PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody, useMediaQuery} from '@chakra-ui/react';
 import { OpenAIAPI_Code, OpenAIAPI_Popup } from '../../services/ApiCalls';
 import Diff from 'react-stylable-diff';
 import './Suggestions.css'
@@ -12,6 +12,7 @@ function Suggestions () {
     const [highlights, setHighlights] = useState() // stores highlighted lines to render
     const [isLoading, setIsLoading] = useState(false);
 
+    const [isWeb] = useMediaQuery("(min-width: 760px)");
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
@@ -124,8 +125,8 @@ function Suggestions () {
     };
 
     return (
-        <Center className="gradient" width={"100vw"} overflowY="auto" display="flex" flexDirection="column">
-            <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
+        <Center className="gradient" width={"100%"} overflowY="auto" display="flex" flexDirection="column">
+            <Box p={4} textAlign={'center'} width={"70%"} marginBottom="5vh">
                 <Heading as="h1" size="xl" m={"2vh"}>
                     Welcome to the DAA Code Editor
                 </Heading>
@@ -137,7 +138,7 @@ function Suggestions () {
                     If you do not see any highlighted areas, nice job! This means that the model was not able to detect any issues - however this does not mean your code is issue-free! Please check other accessibility resources and documentation as well.
                 </Text>
             </Box>
-            <Box textAlign={'center'} width={"80vw"} mb={"5vh"} display="flex" flexDirection="row" gap="3vw">
+            <Box textAlign={'center'} width={"80vw"} mb={"5vh"} display="flex" flexDirection={isWeb ? "row" : "column"} gap="3vw">
                 <Box>
                     <Textarea 
                         onChange={(e) => setCode(e.target.value)}
@@ -161,13 +162,13 @@ function Suggestions () {
                         p={4}
                         overflow="auto"
                     >
-                        <Code width={"35vw"} fontSize="md" p={5} textAlign="left" className="language-javascript">
+                        <Code width={isWeb ? "40vw" : "80vw"} fontSize="md" p={5} textAlign="left" className="language-javascript">
                             {highlights}
                         </Code>
                     </Box>
                     : 
                     <Box
-                        width={"40vw"}
+                        width={isWeb ? "40vw" : "80vw"}
                         color="white"
                         borderRadius="md"
                         border="3px solid black"

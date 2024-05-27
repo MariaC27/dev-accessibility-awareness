@@ -83,7 +83,7 @@ useEffect(() =>{
 }, [props.diff]);
  
   return (
-    <Box width={"100vw"} overflowY="auto" display="flex" flexDirection="row">
+    <Box width={"100%"} overflowY="auto" display="flex" flexDirection="row">
       <Box
         p={0.5}
         m={2}

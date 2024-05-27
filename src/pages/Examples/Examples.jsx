@@ -7,8 +7,8 @@ import '../../App.css'
 const Explanations = () => {
 
   return (
-    <Center className="gradient" width={"100vw"} overflowY="auto" display="flex" flexDirection="column">
-    <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
+    <Center className="gradient" width={"100%"} overflowY="auto" display="flex" flexDirection="column">
+    <Box p={4} textAlign={'center'} width={"70%"} marginBottom="5vh">
       <Heading as="h1" size="xl" m={"2vh"}>
         Explanations and Examples
       </Heading>
@@ -19,7 +19,7 @@ const Explanations = () => {
         In the examples, click on the highlighted areas to see the reasoning.
       </Text>
     </Box>
-      <VStack align="start" spacing="8" width={"90vw"}>
+      <VStack align="start" spacing="8" width={"90%"} mb={"5vh"}>
         <Box
           p="4"
           borderWidth="3px"

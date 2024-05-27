@@ -3,11 +3,11 @@ import '../../App.css'
 
 const Home = () => {
   return (
-    <Center className="gradient" width={"100vw"} height={"100vh"} display="flex" flexDirection="column">
-        <Heading as="h1" size="xl" mb={4}>
+    <Center className="gradient" width={"100%"} height={"100vh"} display="flex" flexDirection="column">
+        <Heading as="h1" size="xl" textAlign={'center'} mb={4}>
           Welcome to the Dev Accessibility Awareness Project
         </Heading>
-        <Text fontSize="lg" marginBottom="5vh">
+        <Text fontSize="lg" textAlign={'center'} marginBottom="5vh">
           Promoting developer awareness of accessible coding practices outside of the 
           production sphere.
         </Text>
