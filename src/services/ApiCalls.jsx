@@ -4,7 +4,7 @@ export const OpenAIAPI_Code = async (code) => {
 
     const APIBody = {
     "model": "gpt-3.5-turbo",
-    "messages": [{"role": "user", "content": "Rewrite this code using semantic HTML and correct button types, returning only the code" + code } ],
+    "messages": [{"role": "user", "content": "Reqrite the same code with the accessibility issues fixed, returning only the code" + code } ],
     "temperature": 0,
     "max_tokens": 60,
     "top_p": 1.0,
