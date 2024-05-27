@@ -21,8 +21,8 @@ const CodeExample = (props) => {
                 <div key={index}>
                     <Popover key={index} placement="top-start">
                     <PopoverTrigger>
-                        <span key={index} style={{cursor: 'pointer' }}>
-                          <p className="semantic-background">{modifiedLine}</p>
+                        <span key={index} className="semantic-background" style={{cursor: 'pointer' }}>
+                          {modifiedLine}
                         </span>
                     </PopoverTrigger>
                     <PopoverContent>
