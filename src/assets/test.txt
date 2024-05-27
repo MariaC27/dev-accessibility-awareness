@@ -39,3 +39,13 @@ function App() {
     <p>Content</p>
   </nav>
 </header>
+
+
+
+<h2>About Us</h2>
+<p>Lorem ipsum</p>
+<img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg"/>
+<p>Lorem ipsum</p>
+<p>Lorem ipsum</p>
+<a href="https://github.com/">See Documentation</a> 
+
