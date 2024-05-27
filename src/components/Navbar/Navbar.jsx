@@ -18,6 +18,7 @@ const Navbar = () => {
         py="5"
         align="center"
         justify="space-between"
+        className="b-color"
         >
         <HStack as="nav" spacing="5">
           <Logo id="logo"/>

@@ -1,7 +1,18 @@
 
+
+
+
+
+
 <h2>Welcome to our site!</h2>
 <p>Click on the links below to check things out</p>
 <a href="https://www.w3schools.com">See Documentation</a> 
+
+
+
+
+
+
 
 
 function App() {
@@ -13,4 +24,9 @@ function App() {
   );
 }
 
-export default App;
+<h1>{name}</h1>
+<div className="friend-tags">
+  <span className="tag major">{major}</span>
+  <span className="tag minor">{minor}</span>
+  {renderOtherTags()}
+</div>

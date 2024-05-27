@@ -1,8 +1,9 @@
 import { Heading, Text, Center } from '@chakra-ui/react';
+import '../../App.css'
 
 const Home = () => {
   return (
-    <Center width={"100vw"} height={"100vh"} display="flex" flexDirection="column">
+    <Center className="gradient" width={"100vw"} height={"100vh"} display="flex" flexDirection="column">
         <Heading as="h1" size="xl" mb={4}>
           Welcome to the Dev Accessibility Awareness Project
         </Heading>

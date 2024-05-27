@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react'
 import { Box, Heading, Text, VStack } from '@chakra-ui/react';
 import CodeExample from '../../components/CodeExample/CodeExample';
 import {d1, d2} from '../../services/ExamplesDiff';
+import '../../App.css'
 
 const Explanations = () => {
 
   return (
-    <Box pl={10} pt={10}>
+    <Box className="gradient" pl={10} pt={10}>
       <Heading as="h1" size="xl" mb={4}>
         Explanations and Examples
       </Heading>
