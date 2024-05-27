@@ -122,6 +122,10 @@ function Suggestions () {
         setHighlights(highlighted_return);
     }, [difference]);
 
+    const handleRefresh = () => {
+        window.location.reload();
+    };
+
     return (
         <Center className="gradient" width={"100vw"} overflowY="auto" display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
@@ -133,37 +137,44 @@ function Suggestions () {
                     You can hover over different highlighted areas in the output to learn why certain changes were made.
                 </Text>
             </Box>
-            <Box textAlign={'center'} width={"70vw"} mb={"5vh"}>
-                <Textarea 
-                    onChange={(e) => setCode(e.target.value)}
-                    placeholder="Paste code here"
-                    cols = {80}
-                    rows = {8}
-                    marginBottom="3vh"
-                />
-                <Button onClick={handleClick} marginBottom="3vh">Analyze</Button>
-                <Spacer/>
+            <Box textAlign={'center'} width={"80vw"} mb={"5vh"} display="flex" flexDirection="row" gap="3vw">
+                <Box>
+                    <Textarea 
+                        onChange={(e) => setCode(e.target.value)}
+                        placeholder="Paste code here"
+                        cols = {40}
+                        rows = {8}
+                        marginBottom="3vh"
+                    />
+                    <Button onClick={handleClick} marginBottom="3vh" marginRight="2vw">Analyze</Button>
+                    <Button alignContent={"right"} onClick={handleRefresh} variant="outline" marginBottom="3vh">Reset</Button>
+                    <Spacer/>
+                </Box>
 
                 {isLoading ? <p>Loading...</p> : null}
             
                 {difference.length !== 0?
                     <Box
-                        bg="gray.800"
                         color="white"
                         borderRadius="md"
+                        border="3px solid black"
                         p={4}
                         overflow="auto"
-                        css={{
-                        '& pre': {
-                            margin: 0,
-                        },
-                        }}
                     >
-                        <Code width={"65vw"} fontSize="md" p={5} textAlign="left" className="language-javascript">
+                        <Code width={"35vw"} fontSize="md" p={5} textAlign="left" className="language-javascript">
                             {highlights}
                         </Code>
                     </Box>
-                    : null
+                    : 
+                    <Box
+                        width={"40vw"}
+                        color="white"
+                        borderRadius="md"
+                        border="3px solid black"
+                        p={4}
+                        overflow="auto"
+                    >
+                    </Box>
                 } 
             </Box>
             <Spacer ref={editorRef}/>
