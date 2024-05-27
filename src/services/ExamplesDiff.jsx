@@ -74,3 +74,42 @@ export const d1 = [
         reason: ""
     },
   ]
+
+
+  export const d3 = [
+    {
+        isMod: true,
+        lineIndex: 0,
+        modifiedLine: `<header>`,
+        originalLine: `<div class="header">`,
+        reason: "The <header> element is specifically designed to represent introductory content at the beginning of a section or page. By using <header> instead of a generic <div>, we convey to both browsers and assistive technologies that the content within this element is significant for understanding the structure of the page."
+    },
+    {
+        isMod: true,
+        lineIndex: 1,
+        modifiedLine: `   <nav>`,
+        originalLine: `<div class="navigation">`,
+        reason: "The <nav> element is semantically intended to represent a section of a page that contains navigation links. By using <nav> instead of a generic <div>, we convey to both browsers and assistive technologies that the content within this element serves a navigational purpose, making the structure of the webpage more meaningful."
+    },
+    {
+        isMod: false,
+        lineIndex: 2,
+        modifiedLine: "<p>Content</p>",
+        originalLine: "<p>Content</p>",
+        reason: ""
+    },
+    {
+        isMod: true,
+        lineIndex: 3,
+        modifiedLine: "</nav>",
+        originalLine: "</div>",
+        reason: "Closing tag for semantic HTML modification"
+    },
+    {
+        isMod: true,
+        lineIndex: 4,
+        modifiedLine: "</header>",
+        originalLine: "</div>",
+        reason: "Closing tag for semantic HTML modification"
+    },
+  ]

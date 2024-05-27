@@ -1,17 +1,8 @@
 
 
-
-
-
-
 <h2>Welcome to our site!</h2>
 <p>Click on the links below to check things out</p>
 <a href="https://www.w3schools.com">See Documentation</a> 
-
-
-
-
-
 
 
 
@@ -24,9 +15,27 @@ function App() {
   );
 }
 
+
+<img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg" alt="Cat" />
+
+
 <h1>{name}</h1>
 <div className="friend-tags">
   <span className="tag major">{major}</span>
   <span className="tag minor">{minor}</span>
   {renderOtherTags()}
 </div>
+
+
+
+<div class="header">
+  <div class="navigation">
+    <p>Content</p>
+  </div>
+</div>
+
+<header>
+  <nav>
+    <p>Content</p>
+  </nav>
+</header>

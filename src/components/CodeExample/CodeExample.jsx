@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Box, Center, Code, Text, Popover, PopoverTrigger, 
   PopoverContent, PopoverArrow, PopoverCloseButton, PopoverHeader, PopoverBody } from '@chakra-ui/react';
 import Diff from 'react-stylable-diff';
+import '../../App.css'
 
 const CodeExample = (props) => {
 
@@ -15,11 +16,30 @@ const CodeExample = (props) => {
     const highlightedText = d.map((obj, index) => {
         const { lineIndex, isMod, modifiedLine, originalLine, reason} = obj;
         if (isMod) { 
+            if (d.length == 5){ // checks for semantic HTML example
+              return (
+                <div key={index}>
+                    <Popover key={index} placement="top-start">
+                    <PopoverTrigger>
+                        <span key={index} style={{cursor: 'pointer' }}>
+                          <p className="semantic-background">{modifiedLine}</p>
+                        </span>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>Changes Made</PopoverHeader>
+                        <PopoverBody>{reason}</PopoverBody>
+                    </PopoverContent>
+                    </Popover>
+                </div>
+              );
+            } else {
             return (
             <div key={index}>
                 <Popover key={index} placement="top-start">
                 <PopoverTrigger>
-                    <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
+                    <span key={index} style={{ cursor: 'pointer' }}>
                     <Diff inputA={originalLine} inputB={modifiedLine}  />
                     </span>
                 </PopoverTrigger>
@@ -32,6 +52,7 @@ const CodeExample = (props) => {
                 </Popover>
             </div>
             );
+            }
         } 
         else{
             return (
@@ -62,7 +83,7 @@ useEffect(() =>{
 }, [props.diff]);
  
   return (
-    <Center width={"100vw"} overflowY="auto" display="flex" flexDirection="row">
+    <Box width={"100vw"} overflowY="auto" display="flex" flexDirection="row">
       <Box
         p={0.5}
         m={2}
@@ -108,7 +129,7 @@ useEffect(() =>{
           </Code>
         </Box>
       </Box>
-    </Center>
+    </Box>
   );
 };
 

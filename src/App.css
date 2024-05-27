@@ -11,3 +11,7 @@
   background: rgb(255,255,255);
   background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(148,187,233,0.27512254901960786) 100%);
 }
+
+.semantic-background{
+  background-color:rgb(201, 238, 211);
+}

@@ -12,7 +12,6 @@ function Suggestions () {
     const [highlights, setHighlights] = useState() // stores highlighted lines to render
     const [isLoading, setIsLoading] = useState(false);
 
-    const editorRef = useRef(null);
 
     // given original code and modified code, return a list with changed line indices
     const compareCode = async (originalCode, modifiedCode) => {
@@ -78,7 +77,7 @@ function Suggestions () {
                 <div key={index}>
                     <Popover key={index} placement="top-start">
                     <PopoverTrigger>
-                        <span key={index} style={{ backgroundColor: 'yellow', cursor: 'pointer' }}>
+                        <span key={index} style={{ cursor: 'pointer' }}>
                         <Diff inputA={originalLine} inputB={modifiedLine}  />
                         </span>
                     </PopoverTrigger>
@@ -108,10 +107,8 @@ function Suggestions () {
         setIsLoading(true);
         let res = await getData();
         compareCode(code, res).then((d) => {
-            console.log("DIFFERENCE: ", d)
             setDifference(d);
             setIsLoading(false);
-            editorRef.current.scrollIntoView({ behavior: 'smooth' })
         })
         
     }
@@ -129,12 +126,15 @@ function Suggestions () {
     return (
         <Center className="gradient" width={"100vw"} overflowY="auto" display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70vw"} marginBottom="5vh">
-                <Heading as="h1" size="xl" mb={4}>
+                <Heading as="h1" size="xl" m={"2vh"}>
                     Welcome to the DAA Code Editor
                 </Heading>
-                <Text fontSize="lg">
+                <Text fontSize="lg" mb={"2vh"}>
                     Paste in any code and click Analyze to see areas where accessibility improvements could be made and why. 
-                    You can hover over different highlighted areas in the output to learn why certain changes were made.
+                    You can click over highlighted areas in the output to learn why certain changes were made.
+                </Text>
+                <Text fontSize="sn">
+                    If you do not see any highlighted areas, nice job! This means that the model was not able to detect any issues - however this does not mean your code is issue-free! Please check other accessibility resources and documentation as well.
                 </Text>
             </Box>
             <Box textAlign={'center'} width={"80vw"} mb={"5vh"} display="flex" flexDirection="row" gap="3vw">
@@ -177,7 +177,6 @@ function Suggestions () {
                     </Box>
                 } 
             </Box>
-            <Spacer ref={editorRef}/>
         </Center>
         
     )
