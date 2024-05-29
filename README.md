@@ -14,3 +14,9 @@ Please note that the model does make mistakes and suboptimal recommendations. At
 - [Vite](https://vitejs.dev/)
 - [Chakra UI](https://v2.chakra-ui.com/)
 - [Open AI API, GPT Turbo 3.5](https://platform.openai.com/docs/overview)
+
+
+#### To run locally
+git clone ...
+npm install
+npm run dev

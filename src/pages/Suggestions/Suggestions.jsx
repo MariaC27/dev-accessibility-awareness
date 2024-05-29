@@ -125,7 +125,7 @@ function Suggestions () {
     };
 
     return (
-        <Center className="gradient" width={"100%"} overflowY="auto" display="flex" flexDirection="column">
+        <Center className="gradient" width={"100%"} height={"100vh"} overflowY="auto" display="flex" flexDirection="column">
             <Box p={4} textAlign={'center'} width={"70%"} marginBottom="5vh">
                 <Heading as="h1" size="xl" m={"2vh"}>
                     Welcome to the DAA Code Editor
