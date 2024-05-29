@@ -1,8 +1,8 @@
 
 
-<h2>Welcome to our site!</h2>
-<p>Click on the links below to check things out</p>
-<a href="https://www.w3schools.com">See Documentation</a> 
+<h2>Required components</h2>
+<p>Data, methodology, results discussion.</p>
+<a href="https://www.z-table.com/">See rubric</a> 
 
 
 
@@ -14,6 +14,14 @@ function App() {
     </div>
   );
 }
+
+<div class="header">
+  <div class="navigation">
+    <p>Student Information</p>
+    <span className="tag major">{major}</span>
+    <span className="tag minor">{minor}</span>
+  </div>
+</div>
 
 
 <img src="https://m.media-amazon.com/images/I/61LsnH5NpzL.jpg" alt="Cat" />
@@ -49,3 +57,9 @@ function App() {
 <p>Lorem ipsum</p>
 <a href="https://github.com/">See Documentation</a> 
 
+<h2>Change Image</h2>
+<div>
+  <button onClick={() => this.handleButtonClick('https://via.placeholder.com/150')}>
+    Image 1
+  </button>
+</div>

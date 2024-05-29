@@ -1,8 +1,16 @@
-# React + Vite
+## Dev Accessibility Awareness
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+#### https://dev-accessibility-awareness.onrender.com/
 
-Currently, two official plugins are available:
+Promoting developer awareness of accessible coding practices outside of the production sphere.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Includes resources, examples, and an AI-powered code editor to help you understand and implement accessibility best practices in your projects.
+
+Please note that the model does make mistakes and suboptimal recommendations. At this time it works best with pure HTML code, although does work sometimes with JS.
+
+#### Tech Stack
+
+- [React.js](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Chakra UI](https://v2.chakra-ui.com/)
+- [Open AI API, GPT Turbo 3.5](https://platform.openai.com/docs/overview)
