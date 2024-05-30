@@ -15,6 +15,9 @@ Please note that the model does make mistakes and suboptimal recommendations. At
 - [Chakra UI](https://v2.chakra-ui.com/)
 - [Open AI API, GPT Turbo 3.5](https://platform.openai.com/docs/overview)
 
+#### Credits
+- String diff display: https://github.com/davidmason/react-stylable-diff
+
 
 #### To run locally
 git clone ...
