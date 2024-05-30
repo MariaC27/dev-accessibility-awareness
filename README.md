@@ -6,7 +6,7 @@ Promoting developer awareness of accessible coding practices outside of the prod
 
 Includes resources, examples, and an AI-powered code editor to help you understand and implement accessibility best practices in your projects.
 
-Please note that the model does make mistakes and suboptimal recommendations. At this time it works best with pure HTML code, although does work sometimes with JS.
+Please note that the model does make mistakes and suboptimal recommendations. At this time it works best with pure HTML code, although does work sometimes with JS. At this time, this site is essentially a proof of concept of the effectiveness of developer-side learning-focused interventions about code accessibility.
 
 #### Tech Stack
 
